@@ -1,193 +1,130 @@
-#root {
-  width: 100%;
+.dashboard {
+  min-height: 100vh;
+  padding: 48px;
+  background: #0b0d0f;
+  color: #f1f3f5;
 }
 
-main {
-  width: min(1200px, 92%);
-  margin: 0 auto;
-  padding: 70px 0 100px;
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 32px;
+  max-width: 1400px;
+  margin: 0 auto 40px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid #252a2f;
 }
 
-header {
-  margin-bottom: 55px;
-}
-
-.eyebrow {
+.dashboard-label {
   margin: 0 0 10px;
-  color: #7f8aa3;
+  color: #8f98a3;
   font-size: 12px;
   font-weight: 700;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.18em;
 }
 
-h1 {
+.dashboard-header h1 {
   margin: 0;
-  font-size: clamp(48px, 8vw, 86px);
-  line-height: 0.95;
-  letter-spacing: -0.06em;
+  font-size: clamp(32px, 5vw, 56px);
+  line-height: 1;
+  letter-spacing: -0.04em;
 }
 
-.intro {
-  max-width: 560px;
-  margin-top: 20px;
-  color: #8993a9;
-  font-size: 18px;
+.dashboard-description {
+  max-width: 650px;
+  margin: 18px 0 0;
+  color: #929aa4;
+  font-size: 16px;
   line-height: 1.6;
 }
 
-.stats {
+.system-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  padding: 10px 14px;
+  border: 1px solid #252a2f;
+  border-radius: 999px;
+  color: #b8c0c8;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #72d572;
+  box-shadow: 0 0 12px rgba(114, 213, 114, 0.5);
+}
+
+.dashboard-content {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 18px;
-  margin-bottom: 80px;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
-.stat-card {
-  padding: 28px;
-  border: 1px solid #282c35;
-  border-radius: 18px;
-  background: #191b22;
+.dashboard-card {
+  min-height: 190px;
+  padding: 26px;
+  background: #111417;
+  border: 1px solid #252a2f;
+  border-radius: 14px;
+  transition: border-color 0.2s ease;
 }
 
-.stat-card span,
-.details span,
-.location span {
-  color: #778198;
+.dashboard-card:hover {
+  border-color: #3a4149;
+}
+
+.card-label {
+  margin: 0 0 18px;
+  color: #707984;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.15em;
 }
 
-.stat-card strong {
-  display: block;
-  margin: 22px 0 8px;
-  font-size: 36px;
-}
-
-.stat-card p {
+.dashboard-card h2 {
   margin: 0;
-  color: #727c92;
+  font-size: 24px;
+  letter-spacing: -0.02em;
 }
 
-.activity {
-  margin-top: 20px;
+.dashboard-card p:last-child {
+  margin: 14px 0 0;
+  color: #858e98;
+  line-height: 1.6;
 }
 
-.section-heading {
-  display: flex;
-  align-items: end;
-  justify-content: space-between;
-  gap: 30px;
-  margin-bottom: 25px;
-}
-
-h2 {
-  margin: 0;
-  font-size: 34px;
-  letter-spacing: -0.04em;
-}
-
-label {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  color: #778198;
-  font-size: 12px;
-  font-weight: 600;
-}
-
-select {
-  min-width: 180px;
-  padding: 11px 14px;
-  border: 1px solid #303541;
-  border-radius: 9px;
-  background: #191b22;
-  color: #f2f3f5;
-  font: inherit;
-}
-
-.earthquake-list {
-  display: grid;
-  gap: 18px;
-}
-
-.earthquake-card {
-  padding: 28px;
-  border: 1px solid #282c35;
-  border-radius: 18px;
-  background: #191b22;
-}
-
-.card-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 35px;
-}
-
-.magnitude {
-  padding: 9px 12px;
-  border-radius: 8px;
-  background: #3b3218;
-  color: #e6c765;
-  font-size: 13px;
-  font-weight: 700;
-}
-
-.earthquake-id {
-  color: #69738a;
-  font-size: 12px;
-}
-
-.location {
-  padding-bottom: 28px;
-  border-bottom: 1px solid #282c35;
-}
-
-.location h3 {
-  margin: 10px 0 0;
-  font-size: 23px;
-}
-
-.details {
-  display: grid;
-  grid-template-columns: 1fr 1fr 2fr;
-  gap: 20px;
-  padding-top: 25px;
-}
-
-.details div {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.details strong {
-  font-size: 14px;
-  font-weight: 500;
-}
-
-@media (max-width: 800px) {
-  .stats {
-    grid-template-columns: 1fr;
+@media (max-width: 900px) {
+  .dashboard {
+    padding: 32px 24px;
   }
 
-  .section-heading {
-    align-items: stretch;
+  .dashboard-header {
     flex-direction: column;
   }
 
-  .details {
-    grid-template-columns: 1fr 1fr;
+  .dashboard-content {
+    grid-template-columns: 1fr;
   }
 }
 
-@media (max-width: 500px) {
-  main {
-    padding-top: 40px;
+@media (max-width: 600px) {
+  .dashboard {
+    padding: 24px 18px;
   }
 
-  .details {
-    grid-template-columns: 1fr;
+  .dashboard-header {
+    margin-bottom: 28px;
+  }
+
+  .dashboard-header h1 {
+    font-size: 34px;
   }
 }

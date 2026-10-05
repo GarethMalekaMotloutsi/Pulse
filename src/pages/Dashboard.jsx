@@ -4,8 +4,10 @@ function Dashboard() {
       <header className="dashboard-header">
         <div>
           <p className="dashboard-label">PULSE COMMAND</p>
+
           <h1>Global Intelligence Dashboard</h1>
-          <p>
+
+          <p className="dashboard-description">
             Monitor global events, environmental conditions and emerging
             situations from a single dashboard.
           </p>
@@ -20,7 +22,9 @@ function Dashboard() {
       <section className="dashboard-content">
         <div className="dashboard-card">
           <p className="card-label">EVENT MONITOR</p>
+
           <h2>Global Events</h2>
+
           <p>
             Real-time event data will appear here as Pulse Command develops.
           </p>
@@ -28,7 +32,9 @@ function Dashboard() {
 
         <div className="dashboard-card">
           <p className="card-label">ENVIRONMENT</p>
+
           <h2>Weather Conditions</h2>
+
           <p>
             Environmental data will be integrated into the command dashboard.
           </p>
@@ -36,7 +42,9 @@ function Dashboard() {
 
         <div className="dashboard-card">
           <p className="card-label">ANALYTICS</p>
+
           <h2>Situation Overview</h2>
+
           <p>
             Event statistics and intelligence summaries will appear here.
           </p>
