@@ -1,11 +1,16 @@
 import { useEffect, useState } from "react";
 import { getEarthquakes } from "../services/earthquakeService";
+import { getWeather } from "../services/weatherService";
 
 function Dashboard() {
   const [earthquakes, setEarthquakes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [minMagnitude, setMinMagnitude] = useState("");
+
+  const [weather, setWeather] = useState(null);
+  const [weatherLoading, setWeatherLoading] = useState(true);
+  const [weatherError, setWeatherError] = useState("");
 
   useEffect(() => {
     async function loadEarthquakes() {
@@ -20,6 +25,21 @@ function Dashboard() {
     }
 
     loadEarthquakes();
+  }, []);
+
+  useEffect(() => {
+    async function loadWeather() {
+      try {
+        const data = await getWeather();
+        setWeather(data);
+      } catch (err) {
+        setWeatherError(err.message);
+      } finally {
+        setWeatherLoading(false);
+      }
+    }
+
+    loadWeather();
   }, []);
 
   const filteredEarthquakes = earthquakes.filter((earthquake) => {
@@ -48,6 +68,46 @@ function Dashboard() {
       dateStyle: "short",
       timeStyle: "short",
     });
+  }
+
+  function getWeatherDescription(code) {
+    if (code === 0) {
+      return "Clear sky";
+    }
+
+    if (code >= 1 && code <= 3) {
+      return "Partly cloudy";
+    }
+
+    if (code >= 45 && code <= 48) {
+      return "Fog";
+    }
+
+    if (code >= 51 && code <= 57) {
+      return "Drizzle";
+    }
+
+    if (code >= 61 && code <= 67) {
+      return "Rain";
+    }
+
+    if (code >= 71 && code <= 77) {
+      return "Snow";
+    }
+
+    if (code >= 80 && code <= 82) {
+      return "Rain showers";
+    }
+
+    if (code >= 85 && code <= 86) {
+      return "Snow showers";
+    }
+
+    if (code >= 95 && code <= 99) {
+      return "Thunderstorm";
+    }
+
+    return "Unknown";
   }
 
   return (
@@ -82,7 +142,9 @@ function Dashboard() {
         <div className="dashboard-card">
           <p className="card-label">STRONGEST EVENT</p>
 
-          <h2>{loading ? "—" : strongest > 0 ? strongest.toFixed(1) : "—"}</h2>
+          <h2>
+            {loading ? "—" : strongest > 0 ? strongest.toFixed(1) : "—"}
+          </h2>
 
           <p>Highest earthquake magnitude in the filtered dataset.</p>
         </div>
@@ -93,6 +155,58 @@ function Dashboard() {
           <h2>USGS</h2>
 
           <p>United States Geological Survey earthquake data.</p>
+        </div>
+      </section>
+
+      <section className="dashboard-content">
+        <div className="dashboard-card">
+          <p className="card-label">WEATHER</p>
+
+          <h2>
+            {weatherLoading
+              ? "—"
+              : weather
+                ? `${weather.temperature}°C`
+                : "—"}
+          </h2>
+
+          <p>
+            {weatherLoading
+              ? "Loading weather data..."
+              : weather
+                ? weather.location
+                : weatherError
+                  ? "Weather data unavailable."
+                  : "No weather data available."}
+          </p>
+        </div>
+
+        <div className="dashboard-card">
+          <p className="card-label">WIND SPEED</p>
+
+          <h2>
+            {weatherLoading
+              ? "—"
+              : weather
+                ? `${weather.wind_speed} km/h`
+                : "—"}
+          </h2>
+
+          <p>Current recorded wind speed.</p>
+        </div>
+
+        <div className="dashboard-card">
+          <p className="card-label">WEATHER STATUS</p>
+
+          <h2>
+            {weatherLoading
+              ? "—"
+              : weather
+                ? getWeatherDescription(Number(weather.weather_code))
+                : "—"}
+          </h2>
+
+          <p>Current weather condition in Johannesburg.</p>
         </div>
       </section>
 
@@ -165,9 +279,13 @@ function Dashboard() {
                 </div>
 
                 <div className="event-coordinates">
-                  <span>{earthquake.latitude ?? "—"}° N</span>
+                  <span>
+                    {earthquake.latitude ?? "—"}° N
+                  </span>
 
-                  <span>{earthquake.longitude ?? "—"}° E</span>
+                  <span>
+                    {earthquake.longitude ?? "—"}° E
+                  </span>
                 </div>
               </article>
             ))}
