@@ -5,6 +5,7 @@ function Dashboard() {
   const [earthquakes, setEarthquakes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [minMagnitude, setMinMagnitude] = useState("");
 
   useEffect(() => {
     async function loadEarthquakes() {
@@ -21,10 +22,18 @@ function Dashboard() {
     loadEarthquakes();
   }, []);
 
+  const filteredEarthquakes = earthquakes.filter((earthquake) => {
+    if (minMagnitude === "") {
+      return true;
+    }
+
+    return Number(earthquake.magnitude) >= Number(minMagnitude);
+  });
+
   const strongest =
-    earthquakes.length > 0
+    filteredEarthquakes.length > 0
       ? Math.max(
-          ...earthquakes.map((earthquake) =>
+          ...filteredEarthquakes.map((earthquake) =>
             Number(earthquake.magnitude)
           )
         )
@@ -65,17 +74,17 @@ function Dashboard() {
         <div className="dashboard-card">
           <p className="card-label">SEISMIC ACTIVITY</p>
 
-          <h2>{loading ? "—" : earthquakes.length}</h2>
+          <h2>{loading ? "—" : filteredEarthquakes.length}</h2>
 
-          <p>Recent earthquake events recorded by Pulse.</p>
+          <p>Earthquake events matching the current filter.</p>
         </div>
 
         <div className="dashboard-card">
           <p className="card-label">STRONGEST EVENT</p>
 
-          <h2>{loading ? "—" : strongest.toFixed(1)}</h2>
+          <h2>{loading ? "—" : strongest > 0 ? strongest.toFixed(1) : "—"}</h2>
 
-          <p>Highest earthquake magnitude in the current dataset.</p>
+          <p>Highest earthquake magnitude in the filtered dataset.</p>
         </div>
 
         <div className="dashboard-card">
@@ -83,9 +92,7 @@ function Dashboard() {
 
           <h2>USGS</h2>
 
-          <p>
-            United States Geological Survey earthquake data.
-          </p>
+          <p>United States Geological Survey earthquake data.</p>
         </div>
       </section>
 
@@ -96,9 +103,24 @@ function Dashboard() {
             <h2>Recent Earthquakes</h2>
           </div>
 
-          <span className="event-count">
-            {earthquakes.length} events
-          </span>
+          <div className="filter-control">
+            <label htmlFor="magnitude-filter">
+              Minimum magnitude
+            </label>
+
+            <select
+              id="magnitude-filter"
+              value={minMagnitude}
+              onChange={(event) => setMinMagnitude(event.target.value)}
+            >
+              <option value="">All</option>
+              <option value="1">1.0+</option>
+              <option value="2">2.0+</option>
+              <option value="3">3.0+</option>
+              <option value="4">4.0+</option>
+              <option value="5">5.0+</option>
+            </select>
+          </div>
         </div>
 
         {loading && (
@@ -113,15 +135,15 @@ function Dashboard() {
           </p>
         )}
 
-        {!loading && !error && earthquakes.length === 0 && (
+        {!loading && !error && filteredEarthquakes.length === 0 && (
           <p className="dashboard-message">
-            No earthquake events are currently available.
+            No earthquake events match this filter.
           </p>
         )}
 
-        {!loading && !error && earthquakes.length > 0 && (
+        {!loading && !error && filteredEarthquakes.length > 0 && (
           <div className="earthquake-list">
-            {earthquakes.map((earthquake) => (
+            {filteredEarthquakes.map((earthquake) => (
               <article
                 className="earthquake-card"
                 key={earthquake.id}
@@ -143,13 +165,9 @@ function Dashboard() {
                 </div>
 
                 <div className="event-coordinates">
-                  <span>
-                    {earthquake.latitude ?? "—"}° N
-                  </span>
+                  <span>{earthquake.latitude ?? "—"}° N</span>
 
-                  <span>
-                    {earthquake.longitude ?? "—"}° E
-                  </span>
+                  <span>{earthquake.longitude ?? "—"}° E</span>
                 </div>
               </article>
             ))}

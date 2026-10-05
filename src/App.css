@@ -1,3 +1,106 @@
+.dashboard {
+  min-height: 100vh;
+  padding: 48px;
+  background: #0b0d0f;
+  color: #f1f3f5;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 32px;
+  max-width: 1400px;
+  margin: 0 auto 40px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid #252a2f;
+}
+
+.dashboard-label {
+  margin: 0 0 10px;
+  color: #8f98a3;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+}
+
+.dashboard-header h1 {
+  margin: 0;
+  font-size: clamp(32px, 5vw, 56px);
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.dashboard-description {
+  max-width: 650px;
+  margin: 18px 0 0;
+  color: #929aa4;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.system-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  padding: 10px 14px;
+  border: 1px solid #252a2f;
+  border-radius: 999px;
+  color: #b8c0c8;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #72d572;
+  box-shadow: 0 0 12px rgba(114, 213, 114, 0.5);
+}
+
+.dashboard-content {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.dashboard-card {
+  min-height: 190px;
+  padding: 26px;
+  background: #111417;
+  border: 1px solid #252a2f;
+  border-radius: 14px;
+  transition: border-color 0.2s ease;
+}
+
+.dashboard-card:hover {
+  border-color: #3a4149;
+}
+
+.card-label {
+  margin: 0 0 18px;
+  color: #707984;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+}
+
+.dashboard-card h2 {
+  margin: 0;
+  font-size: 24px;
+  letter-spacing: -0.02em;
+}
+
+.dashboard-card p:last-child {
+  margin: 14px 0 0;
+  color: #858e98;
+  line-height: 1.6;
+}
+
 .earthquake-section {
   max-width: 1400px;
   margin: 42px auto 0;
@@ -92,10 +195,54 @@
   font-size: 12px;
 }
 
+.filter-control {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.filter-control label {
+  color: #707984;
+  font-size: 12px;
+}
+
+.filter-control select {
+  padding: 9px 12px;
+  background: #111417;
+  border: 1px solid #252a2f;
+  border-radius: 8px;
+  color: #dfe3e7;
+  cursor: pointer;
+  outline: none;
+}
+
+.filter-control select:focus {
+  border-color: #4a525b;
+}
+
+@media (max-width: 900px) {
+  .dashboard {
+    padding: 32px 24px;
+  }
+
+  .dashboard-header {
+    flex-direction: column;
+  }
+
+  .dashboard-content {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 700px) {
   .section-heading {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .filter-control {
+    width: 100%;
+    justify-content: space-between;
   }
 
   .earthquake-card {
@@ -105,5 +252,19 @@
 
   .event-coordinates {
     padding-left: 80px;
+  }
+}
+
+@media (max-width: 600px) {
+  .dashboard {
+    padding: 24px 18px;
+  }
+
+  .dashboard-header {
+    margin-bottom: 28px;
+  }
+
+  .dashboard-header h1 {
+    font-size: 34px;
   }
 }
